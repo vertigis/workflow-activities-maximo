@@ -28,11 +28,11 @@ To use the Maximo activities in [Geocortex Workflow Designer](https://apps.geoco
 1. Establish a connection to the Maximo service
    1. To connect to the Maximo service as a user:
       1. Add the `Create Maximo Service` activity to a workflow
-      1. Set the `URL` input to the root URL of your Maximo server. For example, `https://api.maximo.com`.
+      1. Set the `URL` input to the root URL of your Maximo server. For example, `https://acme.emaximo.com/maximo`.
       1. Set the `Username` and `Password` inputs
    - **IMPORTANT:** secrets and passwords are credentials that should not be hard coded into workflows. These values should be acquired by the workflow at runtime from the end user or from another secure system.
 1. Use the Maximo service
-   1. Add one of the other Maximo activities to the workflow. For example, `Get Asset`.
+   1. Add one of the other Maximo activities to the workflow. For example, `Get Maximo Asset`.
    1. Set the `Service` input of the activity to be the output of the `Create Maximo Service` activity
       - Typically this would use an expression like `=$mxService1.service`
    1. Supply any additional inputs to the activity
