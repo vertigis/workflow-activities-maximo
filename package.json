@@ -39,5 +39,10 @@
         "last 2 edge versions",
         "last 2 firefox versions",
         "last 2 safari versions"
-    ]
+    ],
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    }
 }
