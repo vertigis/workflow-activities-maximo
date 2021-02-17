@@ -84,6 +84,7 @@ export class SendMaximoRequest implements IActivityHandler {
                 result: response,
             };
         } else {
+            // eslint-disable-next-line
             throw new Error(`HTTP method '${method}' not supported.`);
         }
     }

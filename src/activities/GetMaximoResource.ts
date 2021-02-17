@@ -38,7 +38,9 @@ export interface GetMaximoResourceOutputs {
     /**
      * @description The result of the activity.
      */
-    result: {};
+    result: {
+        href: string;
+    };
 }
 
 /**

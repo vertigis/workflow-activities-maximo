@@ -17,7 +17,7 @@ export interface GetMaximoCurrentUserOutputs {
      * @description The result of the activity.
      */
     result: {
-        address: {};
+        address: any;
         apicachekey: string;
         baseCalendar: string;
         baseCurrency: string;
@@ -65,7 +65,7 @@ export interface GetMaximoCurrentUserOutputs {
         };
         langcode: string;
         lastname: string;
-        location: {};
+        location: any;
         loginID: string;
         loginUserName: string;
         personId: string;
