@@ -3,7 +3,7 @@ import { MaximoService } from "../MaximoService";
 import { get } from "../request";
 
 /** An interface that defines the inputs of the activity. */
-export interface GetMaximoAssetsInputs {
+export interface GetMaximoResourceInputs {
     /**
      * @description The Maximo API Service.
      * @required
@@ -11,51 +11,54 @@ export interface GetMaximoAssetsInputs {
     service: MaximoService;
 
     /**
-     * @description The where clause to filter the set of resources.
+     * @description The resource to fetch.
+     * @required
      */
-    where: string;
+    resource:
+        | "os/mxaction/{id}"
+        | "os/mxamcrew/{id}"
+        | "os/mxbimassetwo/{id}"
+        | "os/mxperson/{id}"
+        | "os/mxperuser/{id}"
+        | "os/mxpo/{id}"
+        | "os/mxpr/{id}"
+        | "os/mxproblem/{id}"
+        | "os/mxreceipt/{id}"
+        | "os/mxsrvad/{id}"
+        | string;
 
     /**
      * @description The select clause specifying the set of attributes to fetch from the object structures.
      */
     select: string;
-
-    /**
-     * @description The order by clause specifying the sort order of the results. For example, -attr1,+attr2.
-     */
-    orderBy: string;
 }
 
 /** An interface that defines the outputs of the activity. */
-export interface GetMaximoAssetsOutputs {
+export interface GetMaximoResourceOutputs {
     /**
      * @description The result of the activity.
      */
-    result: {
-        href: string;
-        member: {
-            href: string;
-        }[];
-    };
+    result: {};
 }
 
 /**
  * @category Maximo
- * @description Gets Maximo assets.
+ * @description Gets a list of Maximo resources.
  */
-export class GetMaximoAssets implements IActivityHandler {
+export class GetMaximoResource implements IActivityHandler {
     async execute(
-        inputs: GetMaximoAssetsInputs
-    ): Promise<GetMaximoAssetsOutputs> {
-        const { orderBy, select, service, where } = inputs;
+        inputs: GetMaximoResourceInputs
+    ): Promise<GetMaximoResourceOutputs> {
+        const { resource, select, service } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
+        if (!resource) {
+            throw new Error("resource is required");
+        }
 
-        const response = await get(service, `oslc/os/mxasset`, {
-            ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
+        const response = await get(service, `oslc/${resource}`, {
             ...(select ? { "oslc.select": select } : undefined),
-            ...(where ? { "oslc.where": where } : undefined),
         });
 
         return {

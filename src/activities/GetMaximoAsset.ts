@@ -16,6 +16,11 @@ export interface GetMaximoAssetInputs {
      * @required
      */
     assetId: string;
+
+    /**
+     * @description The select clause specifying the set of attributes to fetch from the object structures.
+     */
+    select: string;
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -24,57 +29,65 @@ export interface GetMaximoAssetOutputs {
      * @description The result of the activity.
      */
     result: {
-        "assetmeter_collectionref": string;
-        "spi:autowogen": boolean;
-        "spi:status": string;
-        "spi:pluscisinhousecal": boolean;
-        "spi:changeby": string;
-        "spi:orgid": string;
-        "spi:assetid": number;
-        "spi:unchargedcost": number;
-        "assetusercust_collectionref": string;
-        "spi:expectedlife": number;
-        "spi:ytdcost": number;
-        "spi:rolltoallchildren": boolean;
-        "_rowstamp": string;
-        "spi:iscalibration": boolean;
-        "spi:pluscpmextdate": boolean;
-        "spi:totdowntime": number;
-        "spi:islinear": boolean;
-        "spi:assetnum": string;
-        "spi:mainthierchy": boolean;
-        "spi:removefromactivesp": boolean;
-        "assetspec_collectionref": string;
-        "spi:siteid": string;
-        "spi:statusdate": string;
-        "spi:totalcost": number;
-        "spi:tloampartition": boolean;
-        "spi:newsite": "DELCO",
-        "spi:budgetcost": number;
-        "spi:plusciscontam": boolean;
-        "spi:returnedtovendor": boolean;
-        "spi:disabled": boolean;
-        "spi:children": boolean;
-        "spi:isrunning": boolean;
-        "rdf:about": string;
-        "spi:changepmstatus": boolean;
-        "spi:totunchargedcost": number;
-        "prefixes": {
-            "rdf": string;
-            "spi": string;
-            "oslc": string;
-        },
-        "spi:replacecost": number;
-        "spi:invcost": number;
-        "assetmntskd_collectionref": string;
-        "spi:moved": boolean;
-        "spi:changedate": string;
-        "spi:status_description": string;
-        "assetopskd_collectionref": string;
-        "spi:pluscismte": boolean;
-        "spi:removefromactiveroutes": boolean;
-        "spi:pluscsolution": boolean;
-        "spi:purchaseprice": number;
+        assetid: number;
+        assetmeter_collectionref: string;
+        assetmntskd_collectionref: string;
+        assetnum: string;
+        assetopskd_collectionref: string;
+        assetspec: [];
+        assetspec_collectionref: string;
+        assetusercust_collectionref: string;
+        autowogen: boolean;
+        budgetcost: number;
+        changeby: string;
+        changedate: string;
+        changepmstatus: boolean;
+        children: boolean;
+        description: string;
+        disabled: boolean;
+        expectedlife: number;
+        expectedlifedate: string;
+        hierarchypath: string;
+        href: string;
+        installdate: string;
+        invcost: number;
+        iscalibration: boolean;
+        islinear: boolean;
+        isrunning: boolean;
+        itemnum: string;
+        itemsetid: string;
+        location: string;
+        manufacturer: string;
+        mainthierchy: boolean;
+        moved: boolean;
+        newsite: string;
+        orgid: string;
+        pluscpmextdate: boolean;
+        plusciscontam: boolean;
+        pluscisinhousecal: boolean;
+        pluscismte: boolean;
+        pluscsolution: boolean;
+        purchaseprice: number;
+        priority: number;
+        removefromactiveroutes: boolean;
+        removefromactivesp: boolean;
+        replacecos: number;
+        replacecost: number;
+        returnedtovendor: boolean;
+        rolltoallchildren: boolean;
+        rotsuspacct: string;
+        siteid: string;
+        status: string;
+        statusdate: string;
+        status_description: string;
+        tloampartition: boolean;
+        totalcost: number;
+        totdowntime: number;
+        totunchargedcost: number;
+        unchargedcost: number;
+        vendor: string;
+        ytdcost: number;
+        _rowstamp: string;
     };
 }
 
@@ -83,8 +96,10 @@ export interface GetMaximoAssetOutputs {
  * @description Gets information about a single Maximo asset.
  */
 export class GetMaximoAsset implements IActivityHandler {
-    async execute(inputs: GetMaximoAssetInputs): Promise<GetMaximoAssetOutputs> {
-        const { assetId, service } = inputs;
+    async execute(
+        inputs: GetMaximoAssetInputs
+    ): Promise<GetMaximoAssetOutputs> {
+        const { assetId, select, service } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
@@ -92,7 +107,12 @@ export class GetMaximoAsset implements IActivityHandler {
             throw new Error("assetId is required");
         }
 
-        const response = await get(service, `oslc/os/mxasset/${assetId}`);
+        // Get the ID from URLs
+        const id = assetId.substring(assetId.lastIndexOf("/") + 1);
+
+        const response = await get(service, `oslc/os/mxasset/${id}`, {
+            ...(select ? { "oslc.select": select } : undefined),
+        });
 
         return {
             result: response,

@@ -19,23 +19,22 @@ export interface GetMaximoSystemInfoOutputs {
     result: {
         appServer: string;
         appVersion: {
-            "rdfs:member": {
-                "spi:versionKey": string;
-            }[]
+            member: {
+                versionKey: string;
+            }[];
         };
         database: {
             dbProductName: string;
             dbVersion: string;
             dbMajorVersion: number;
             dbMinorVersion: number;
-        }
+        };
         os: {
             osName: string;
             osVersion: string;
             architecture: string;
             availableProcessors: number;
         };
-        "rdf:about": string;
     };
 }
 
@@ -44,7 +43,9 @@ export interface GetMaximoSystemInfoOutputs {
  * @description Gets information about the Maximo service.
  */
 export class GetMaximoSystemInfo implements IActivityHandler {
-    async execute(inputs: GetMaximoSystemInfoInputs): Promise<GetMaximoSystemInfoOutputs> {
+    async execute(
+        inputs: GetMaximoSystemInfoInputs
+    ): Promise<GetMaximoSystemInfoOutputs> {
         const { service } = inputs;
         if (!service) {
             throw new Error("service is required");

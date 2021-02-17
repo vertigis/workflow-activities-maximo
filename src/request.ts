@@ -4,13 +4,13 @@ import { MaximoRequestError } from "./MaximoRequestError";
 export async function get<T = any>(
     service: MaximoService,
     path: string,
-    params?: Record<string, string | number | boolean | null | undefined>
+    query?: Record<string, string | number | boolean | null | undefined>
 ): Promise<T> {
     if (!service.url) {
         throw new Error("url is required");
     }
 
-    const qs = objectToQueryString(params);
+    const qs = objectToQueryString({ lean: 1, ...query });
     const url = `${service.url}/${path}${qs ? "?" + qs : ""}`;
     const response = await fetch(url, {
         headers: {
@@ -27,13 +27,15 @@ export async function get<T = any>(
 export async function post<T = any>(
     service: MaximoService,
     path: string,
-    data?: Record<string, any>
+    query?: Record<string, string | number | boolean | null | undefined>,
+    body?: Record<string, any>
 ): Promise<T> {
     if (!service.url) {
         throw new Error("url is required");
     }
 
-    const url = `${service.url}/${path}`;
+    const qs = objectToQueryString({ lean: 1, ...query });
+    const url = `${service.url}/${path}${qs ? "?" + qs : ""}`;
     const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -41,7 +43,7 @@ export async function post<T = any>(
             "Content-Type": "application/json",
             maxauth: service.authToken,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
     });
 
     checkResponse(response);

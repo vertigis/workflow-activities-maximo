@@ -3,12 +3,29 @@ import { MaximoService } from "../MaximoService";
 import { get } from "../request";
 
 /** An interface that defines the inputs of the activity. */
-export interface GetMaximoAssetsInputs {
+export interface GetMaximoResourcesInputs {
     /**
      * @description The Maximo API Service.
      * @required
      */
     service: MaximoService;
+
+    /**
+     * @description The name of the set of resources.
+     * @required
+     */
+    resourceName:
+        | "os/mxaction"
+        | "os/mxamcrew"
+        | "os/mxbimassetwo"
+        | "os/mxperson"
+        | "os/mxperuser"
+        | "os/mxpo"
+        | "os/mxpr"
+        | "os/mxproblem"
+        | "os/mxreceipt"
+        | "os/mxsrvad"
+        | string;
 
     /**
      * @description The where clause to filter the set of resources.
@@ -27,32 +44,32 @@ export interface GetMaximoAssetsInputs {
 }
 
 /** An interface that defines the outputs of the activity. */
-export interface GetMaximoAssetsOutputs {
+export interface GetMaximoResourcesOutputs {
     /**
      * @description The result of the activity.
      */
     result: {
         href: string;
-        member: {
-            href: string;
-        }[];
     };
 }
 
 /**
  * @category Maximo
- * @description Gets Maximo assets.
+ * @description Gets a list of Maximo resources.
  */
-export class GetMaximoAssets implements IActivityHandler {
+export class GetMaximoResources implements IActivityHandler {
     async execute(
-        inputs: GetMaximoAssetsInputs
-    ): Promise<GetMaximoAssetsOutputs> {
-        const { orderBy, select, service, where } = inputs;
+        inputs: GetMaximoResourcesInputs
+    ): Promise<GetMaximoResourcesOutputs> {
+        const { orderBy, resourceName, select, service, where } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
+        if (!resourceName) {
+            throw new Error("resourceName is required");
+        }
 
-        const response = await get(service, `oslc/os/mxasset`, {
+        const response = await get(service, `oslc/${resourceName}`, {
             ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
             ...(select ? { "oslc.select": select } : undefined),
             ...(where ? { "oslc.where": where } : undefined),
