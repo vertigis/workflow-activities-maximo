@@ -5,7 +5,17 @@ This project contains activities for interacting with the [Maximo REST API](http
 
 ## Requirements
 
-In order for the Maximo activities to be able to communicate with the Maximo REST API your Maximo deployment must support CORS. This can be enabled:
+### Geocortex Workflow Versions
+
+The Maximo activities are designed to work with Geocortex Workflow versions `5.19` and above.
+
+### Maximo Versions
+
+The Maximo activities are designed to work with Maximo versions `7.6.0.2` and above.
+
+### Cross-Origin Resource Sharing (CORS)
+
+In order for the Maximo activities to be able to communicate with the Maximo REST API your Maximo deployment must support [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS). This can be enabled:
 
 -   By enabling CORS on the Maximo web server.
 -   By using a CORS-enabled proxy.
