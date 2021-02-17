@@ -3,6 +3,13 @@
 
 This project contains activities for interacting with the [Maximo REST API](https://developer.ibm.com/static/site-id/155/maximodev/restguide/Maximo_Nextgen_REST_API.html) in a [Geocortex Workflow](https://www.geocortex.com/products/geocortex-workflow/).
 
+## Requirements
+
+In order for the Maximo activities to be able to communicate with the Maximo REST API your Maximo deployment must support CORS. This can be enabled:
+
+-   By enabling CORS on the Maximo web server.
+-   By using a CORS-enabled proxy.
+
 ## Usage
 
 To use the Maximo activities in [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/) you need to register an activity pack and then add the activities to a workflow.
@@ -12,31 +19,31 @@ To use the Maximo activities in [Geocortex Workflow Designer](https://apps.geoco
 1. Sign in to ArcGIS Online or Portal for ArcGIS
 1. Go to **My Content**
 1. Select **Add Item > An application**
-   - Type: `Web Mapping`
-   - Purpose: `Ready To Use`
-   - API: `JavaScript`
-   - URL: The URL to this activity pack manifest
-     - Use https://unpkg.com/@geocortex/workflow-activities-maximo/activitypack.json for the latest version
-     - Use https://unpkg.com/@geocortex/workflow-activities-maximo@0.1.0/activitypack.json for a specific version
-   - Title: Your desired title
-   - Tags: Must include `geocortex-workflow-activity-pack`
+    - Type: `Web Mapping`
+    - Purpose: `Ready To Use`
+    - API: `JavaScript`
+    - URL: The URL to this activity pack manifest
+        - Use https://unpkg.com/@geocortex/workflow-activities-maximo/activitypack.json for the latest version
+        - Use https://unpkg.com/@geocortex/workflow-activities-maximo@0.1.0/activitypack.json for a specific version
+    - Title: Your desired title
+    - Tags: Must include `geocortex-workflow-activity-pack`
 1. Reload [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/)
 1. The Maximo activities will now appear in the activity toolbox in an `Maximo` category
 
 ### Use the Maximo activities in a workflow
 
 1. Establish a connection to the Maximo service
-   1. To connect to the Maximo service as a user:
-      1. Add the `Create Maximo Service` activity to a workflow
-      1. Set the `URL` input to the root URL of your Maximo server. For example, `https://acme.emaximo.com/maximo`.
-      1. Set the `Username` and `Password` inputs
-   - **IMPORTANT:** secrets and passwords are credentials that should not be hard coded into workflows. These values should be acquired by the workflow at runtime from the end user or from another secure system.
+    1. To connect to the Maximo service as a user:
+        1. Add the `Create Maximo Service` activity to a workflow
+        1. Set the `URL` input to the root URL of your Maximo server. For example, `https://acme.emaximo.com/maximo`.
+        1. Set the `Username` and `Password` inputs
+    - **IMPORTANT:** secrets and passwords are credentials that should not be hard coded into workflows. These values should be acquired by the workflow at runtime from the end user or from another secure system.
 1. Use the Maximo service
-   1. Add one of the other Maximo activities to the workflow. For example, `Get Maximo Asset`.
-   1. Set the `Service` input of the activity to be the output of the `Create Maximo Service` activity
-      - Typically this would use an expression like `=$mxService1.service`
-   1. Supply any additional inputs to the activity
-   1. Supply the `result` output of the activity to the inputs of other activities in the workflow
+    1. Add one of the other Maximo activities to the workflow. For example, `Get Maximo Assets`.
+    1. Set the `Service` input of the activity to be the output of the `Create Maximo Service` activity
+        - Typically this would use an expression like `=$mxService1.service`
+    1. Supply any additional inputs to the activity
+    1. Supply the `result` output of the activity to the inputs of other activities in the workflow
 1. Run the workflow
 
 ## Development
