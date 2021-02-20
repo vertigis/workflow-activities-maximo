@@ -1,6 +1,6 @@
 import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
 import { MaximoService } from "../MaximoService";
-import { get, patch, post } from "../request";
+import { get, httpDelete, patch, post } from "../request";
 
 /** An interface that defines the inputs of the activity. */
 export interface SendMaximoRequestInputs {
@@ -14,7 +14,7 @@ export interface SendMaximoRequestInputs {
      * @description The HTTP request method.
      * @required
      */
-    method: "GET" | "POST" | "PATCH";
+    method: "GET" | "POST" | "PATCH" | "DELETE";
 
     /**
      * @description The Maximo REST API resource or operation to request.
@@ -86,6 +86,16 @@ export class SendMaximoRequest implements IActivityHandler {
             };
         } else if (method == "PATCH") {
             const response = await patch(service, `oslc/${path}`, query, body);
+            return {
+                result: response,
+            };
+        } else if (method == "DELETE") {
+            const response = await httpDelete(
+                service,
+                `oslc/${path}`,
+                query,
+                body
+            );
             return {
                 result: response,
             };

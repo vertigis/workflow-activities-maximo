@@ -69,6 +69,38 @@ export function patch<T = any>(
     });
 }
 
+export async function httpDelete<T = any>(
+    service: MaximoService,
+    path: string,
+    query?: Record<string, string | number | boolean | null | undefined>,
+    body?: Record<string, any>
+): Promise<T> {
+    if (!service.url) {
+        throw new Error("url is required");
+    }
+
+    const qs = objectToQueryString({ lean: 1, ...query });
+    const url = `${service.url}/${path}${qs ? "?" + qs : ""}`;
+    const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            maxauth: service.authToken,
+        },
+        body: JSON.stringify(body),
+    });
+
+    checkResponse(response);
+
+    if (response.status === 204) {
+        // No content
+        return {} as T;
+    }
+
+    return await response.json();
+}
+
 export function checkResponse(response: Response, message?: string): void {
     if (!response.ok) {
         throw new MaximoRequestError(response, message);
