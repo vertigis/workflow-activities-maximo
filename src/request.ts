@@ -28,7 +28,8 @@ export async function post<T = any>(
     service: MaximoService,
     path: string,
     query?: Record<string, string | number | boolean | null | undefined>,
-    body?: Record<string, any>
+    body?: Record<string, any>,
+    headers?: Record<string, any>
 ): Promise<T> {
     if (!service.url) {
         throw new Error("url is required");
@@ -42,13 +43,30 @@ export async function post<T = any>(
             Accept: "application/json",
             "Content-Type": "application/json",
             maxauth: service.authToken,
+            ...headers,
         },
         body: JSON.stringify(body),
     });
 
     checkResponse(response);
 
+    if (response.status === 204) {
+        // No content
+        return {} as T;
+    }
+
     return await response.json();
+}
+
+export function patch<T = any>(
+    service: MaximoService,
+    path: string,
+    query?: Record<string, string | number | boolean | null | undefined>,
+    body?: Record<string, any>
+): Promise<T> {
+    return post<T>(service, path, query, body, {
+        "x-method-override": "PATCH",
+    });
 }
 
 export function checkResponse(response: Response, message?: string): void {
