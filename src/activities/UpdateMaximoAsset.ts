@@ -19,6 +19,7 @@ export interface UpdateMaximoAssetInputs {
 
     /**
      * @description An object representing the properties of the asset to update.
+     * @required
      */
     asset: {
         autowogen?: boolean;
