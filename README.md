@@ -1,7 +1,7 @@
 [![CI/CD](https://github.com/geocortex/workflow-activities-maximo/workflows/CI/CD/badge.svg)](https://github.com/geocortex/workflow-activities-maximo/actions)
 [![npm](https://img.shields.io/npm/v/@geocortex/workflow-activities-maximo)](https://www.npmjs.com/package/@geocortex/workflow-activities-maximo)
 
-This project contains activities for interacting with the [Maximo REST API](https://developer.ibm.com/static/site-id/155/maximodev/restguide/Maximo_Nextgen_REST_API.html) in a [Geocortex Workflow](https://www.geocortex.com/products/geocortex-workflow/).
+This project contains activities for interacting with the **Maximo REST API** in a [Geocortex Workflow](https://www.geocortex.com/products/geocortex-workflow/).
 
 ## Requirements
 
