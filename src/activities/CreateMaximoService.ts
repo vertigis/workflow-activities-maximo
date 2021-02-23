@@ -34,7 +34,6 @@ export interface CreateMaximoServiceOutputs {
  * @category Maximo
  * @defaultName mxService
  * @description Creates an authenticated connection to a Maximo service that can be used with other Maximo activities.
- * @helpUrl https://developer.ibm.com/static/site-id/155/maximodev/restguide/Maximo_Nextgen_REST_API.html#_maximo_asset_management_native_authentication
  */
 export class CreateMaximoService implements IActivityHandler {
     async execute(
