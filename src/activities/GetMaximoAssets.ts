@@ -42,6 +42,8 @@ export interface GetMaximoAssetsOutputs {
 /**
  * @category Maximo
  * @description Gets Maximo assets.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class GetMaximoAssets implements IActivityHandler {
     async execute(

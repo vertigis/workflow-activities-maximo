@@ -58,6 +58,8 @@ export interface SendMaximoRequestOutputs {
 /**
  * @category Maximo
  * @description Sends a request to the Maximo REST API.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class SendMaximoRequest implements IActivityHandler {
     async execute(

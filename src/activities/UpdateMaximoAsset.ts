@@ -67,6 +67,8 @@ export interface UpdateMaximoAssetInputs {
 /**
  * @category Maximo
  * @description Updates information about a single Maximo asset.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class UpdateMaximoAsset implements IActivityHandler {
     async execute(inputs: UpdateMaximoAssetInputs): Promise<void> {
