@@ -34,6 +34,8 @@ export interface CreateMaximoServiceOutputs {
  * @category Maximo
  * @defaultName mxService
  * @description Creates an authenticated connection to a Maximo service that can be used with other Maximo activities.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class CreateMaximoService implements IActivityHandler {
     async execute(

@@ -91,6 +91,8 @@ export interface GetMaximoCurrentUserOutputs {
 /**
  * @category Maximo
  * @description Gets information about the current Maximo user.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class GetMaximoCurrentUser implements IActivityHandler {
     async execute(
