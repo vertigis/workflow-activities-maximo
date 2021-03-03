@@ -4,7 +4,8 @@ import { MaximoRequestError } from "./MaximoRequestError";
 export async function get<T = any>(
     service: MaximoService,
     path: string,
-    query?: Record<string, string | number | boolean | null | undefined>
+    query?: Record<string, string | number | boolean | null | undefined>,
+    headers?: Record<string, any>
 ): Promise<T> {
     if (!service.url) {
         throw new Error("url is required");
@@ -16,6 +17,7 @@ export async function get<T = any>(
         headers: {
             Accept: "application/json",
             maxauth: service.authToken,
+            ...headers,
         },
     });
 
@@ -62,10 +64,12 @@ export function patch<T = any>(
     service: MaximoService,
     path: string,
     query?: Record<string, string | number | boolean | null | undefined>,
-    body?: Record<string, any>
+    body?: Record<string, any>,
+    headers?: Record<string, any>
 ): Promise<T> {
     return post<T>(service, path, query, body, {
         "x-method-override": "PATCH",
+        ...headers,
     });
 }
 
@@ -73,7 +77,8 @@ export async function httpDelete<T = any>(
     service: MaximoService,
     path: string,
     query?: Record<string, string | number | boolean | null | undefined>,
-    body?: Record<string, any>
+    body?: Record<string, any>,
+    headers?: Record<string, any>
 ): Promise<T> {
     if (!service.url) {
         throw new Error("url is required");
@@ -87,6 +92,7 @@ export async function httpDelete<T = any>(
             Accept: "application/json",
             "Content-Type": "application/json",
             maxauth: service.authToken,
+            ...headers,
         },
         body: JSON.stringify(body),
     });

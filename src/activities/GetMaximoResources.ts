@@ -14,17 +14,17 @@ export interface GetMaximoResourcesInputs {
      * @description The name of the set of resources.
      * @required
      */
-    resourceName:
-        | "os/mxaction"
-        | "os/mxamcrew"
-        | "os/mxbimassetwo"
-        | "os/mxperson"
-        | "os/mxperuser"
-        | "os/mxpo"
-        | "os/mxpr"
-        | "os/mxproblem"
-        | "os/mxreceipt"
-        | "os/mxsrvad"
+    resource:
+        | "mxaction"
+        | "mxamcrew"
+        | "mxbimassetwo"
+        | "mxperson"
+        | "mxperuser"
+        | "mxpo"
+        | "mxpr"
+        | "mxproblem"
+        | "mxreceipt"
+        | "mxsrvad"
         | string;
 
     /**
@@ -63,15 +63,15 @@ export class GetMaximoResources implements IActivityHandler {
     async execute(
         inputs: GetMaximoResourcesInputs
     ): Promise<GetMaximoResourcesOutputs> {
-        const { orderBy, resourceName, select, service, where } = inputs;
+        const { orderBy, resource, select, service, where } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
-        if (!resourceName) {
-            throw new Error("resourceName is required");
+        if (!resource) {
+            throw new Error("resource is required");
         }
 
-        const response = await get(service, `oslc/${resourceName}`, {
+        const response = await get(service, `oslc/os/${resource}`, {
             ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
             ...(select ? { "oslc.select": select } : undefined),
             ...(where ? { "oslc.where": where } : undefined),

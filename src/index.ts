@@ -8,3 +8,4 @@ export * from "./activities/GetMaximoResources";
 export * from "./activities/GetMaximoSystemInfo";
 export * from "./activities/SendMaximoRequest";
 export * from "./activities/UpdateMaximoAsset";
+export * from "./activities/UpdateMaximoResource";

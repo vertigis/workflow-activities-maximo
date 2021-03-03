@@ -15,17 +15,24 @@ export interface GetMaximoResourceInputs {
      * @required
      */
     resource:
-        | "os/mxaction/{id}"
-        | "os/mxamcrew/{id}"
-        | "os/mxbimassetwo/{id}"
-        | "os/mxperson/{id}"
-        | "os/mxperuser/{id}"
-        | "os/mxpo/{id}"
-        | "os/mxpr/{id}"
-        | "os/mxproblem/{id}"
-        | "os/mxreceipt/{id}"
-        | "os/mxsrvad/{id}"
+        | "mxaction"
+        | "mxamcrew"
+        | "mxbimassetwo"
+        | "mxperson"
+        | "mxperuser"
+        | "mxpo"
+        | "mxpr"
+        | "mxproblem"
+        | "mxreceipt"
+        | "mxsrvad"
         | string;
+
+    /**
+     * @displayName ID
+     * @description The ID of the resource to fetch.
+     * @required
+     */
+    id: string;
 
     /**
      * @description The select clause specifying the set of attributes to fetch from the object structures.
@@ -53,15 +60,18 @@ export class GetMaximoResource implements IActivityHandler {
     async execute(
         inputs: GetMaximoResourceInputs
     ): Promise<GetMaximoResourceOutputs> {
-        const { resource, select, service } = inputs;
+        const { id, resource, select, service } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
         if (!resource) {
             throw new Error("resource is required");
         }
+        if (!id) {
+            throw new Error("id is required");
+        }
 
-        const response = await get(service, `oslc/${resource}`, {
+        const response = await get(service, `oslc/os/${resource}/${id}`, {
             ...(select ? { "oslc.select": select } : undefined),
         });
 

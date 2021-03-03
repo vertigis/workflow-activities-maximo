@@ -62,6 +62,11 @@ export interface UpdateMaximoAssetInputs {
         vendor?: string;
         ytdcost?: number;
     };
+
+    /**
+     * @description Select clause for selecting a partial view of the member resource.
+     */
+    properties?: string;
 }
 
 /**
@@ -72,7 +77,7 @@ export interface UpdateMaximoAssetInputs {
  */
 export class UpdateMaximoAsset implements IActivityHandler {
     async execute(inputs: UpdateMaximoAssetInputs): Promise<void> {
-        const { asset, assetId, service } = inputs;
+        const { asset, assetId, properties, service } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
@@ -86,6 +91,9 @@ export class UpdateMaximoAsset implements IActivityHandler {
         // Get the ID from URLs
         const id = assetId.substring(assetId.lastIndexOf("/") + 1);
 
-        await patch(service, `oslc/os/mxasset/${id}`, undefined, asset);
+        await patch(service, `oslc/os/mxasset/${id}`, undefined, asset, {
+            patchtype: "MERGE",
+            ...(properties ? { properties: properties } : undefined),
+        });
     }
 }
