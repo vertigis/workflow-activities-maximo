@@ -40,7 +40,7 @@ export interface DeleteMaximoResourceOutputs {
     /**
      * @description The result of the activity.
      */
-    result: {};
+    result: any;
 }
 
 /**
