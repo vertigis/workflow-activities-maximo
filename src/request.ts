@@ -16,7 +16,8 @@ export async function get<T = any>(
     const response = await fetch(url, {
         headers: {
             Accept: "application/json",
-            maxauth: service.authToken,
+            ...(service.apiKey ? { apikey: service.apiKey } : undefined),
+            ...(service.authToken ? { axauth: service.authToken } : undefined),
             ...headers,
         },
     });
@@ -44,7 +45,8 @@ export async function post<T = any>(
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            maxauth: service.authToken,
+            ...(service.apiKey ? { apikey: service.apiKey } : undefined),
+            ...(service.authToken ? { axauth: service.authToken } : undefined),
             ...headers,
         },
         body: JSON.stringify(body),
@@ -69,6 +71,8 @@ export function patch<T = any>(
 ): Promise<T> {
     return post<T>(service, path, query, body, {
         "x-method-override": "PATCH",
+        ...(service.apiKey ? { apikey: service.apiKey } : undefined),
+        ...(service.authToken ? { axauth: service.authToken } : undefined),
         ...headers,
     });
 }
@@ -91,7 +95,8 @@ export async function httpDelete<T = any>(
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            maxauth: service.authToken,
+            ...(service.apiKey ? { apikey: service.apiKey } : undefined),
+            ...(service.authToken ? { axauth: service.authToken } : undefined),
             ...headers,
         },
         body: JSON.stringify(body),

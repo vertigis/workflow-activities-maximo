@@ -12,14 +12,18 @@ export interface CreateMaximoServiceInputs {
     url: string;
     /**
      * @description The username of a Maximo user.
-     * @required
      */
     username: string;
     /**
      * @description The password of a Maximo user. Do not hard code passwords into workflows.
-     * @required
      */
     password: string;
+
+    /**
+     * @displayName API Key
+     * @description The API key of a Maximo.
+     */
+    apiKey: string;
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -41,15 +45,12 @@ export class CreateMaximoService implements IActivityHandler {
     async execute(
         inputs: CreateMaximoServiceInputs
     ): Promise<CreateMaximoServiceOutputs> {
-        const { password, url, username } = inputs;
+        const { apiKey, password, url, username } = inputs;
         if (!url) {
             throw new Error("url is required");
         }
-        if (!username) {
-            throw new Error("username is required");
-        }
-        if (!password) {
-            throw new Error("password is required");
+        if (!username && !password && !apiKey) {
+            throw new Error("username/password or apiKey is required");
         }
 
         // Remove trailing slashes
@@ -58,6 +59,7 @@ export class CreateMaximoService implements IActivityHandler {
         const service: MaximoService = {
             url: normalizedUrl,
             authToken: btoa(`${username}:${password}`),
+            apiKey,
         };
 
         await post(service, "oslc/login");
