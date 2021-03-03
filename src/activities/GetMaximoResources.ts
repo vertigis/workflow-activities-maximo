@@ -41,6 +41,11 @@ export interface GetMaximoResourcesInputs {
      * @description The order by clause specifying the sort order of the results. For example, -attr1,+attr2.
      */
     orderBy: string;
+
+    /**
+     * @description Whether to return only the total number of results matching the search criteria. The default is false.
+     */
+    countOnly: boolean;
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -49,7 +54,11 @@ export interface GetMaximoResourcesOutputs {
      * @description The result of the activity.
      */
     result: {
-        href: string;
+        href?: string;
+        member?: {
+            href: string;
+        }[];
+        totalCount?: number;
     };
 }
 
@@ -63,7 +72,7 @@ export class GetMaximoResources implements IActivityHandler {
     async execute(
         inputs: GetMaximoResourcesInputs
     ): Promise<GetMaximoResourcesOutputs> {
-        const { orderBy, resource, select, service, where } = inputs;
+        const { countOnly, orderBy, resource, select, service, where } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
@@ -72,6 +81,7 @@ export class GetMaximoResources implements IActivityHandler {
         }
 
         const response = await get(service, `oslc/os/${resource}`, {
+            ...(countOnly ? { count: 1 } : undefined),
             ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
             ...(select ? { "oslc.select": select } : undefined),
             ...(where ? { "oslc.where": where } : undefined),
