@@ -1,0 +1,71 @@
+import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import { MaximoService } from "../MaximoService";
+import { httpDelete } from "../request";
+import { getIdFromIdOrUrl } from "../utils";
+
+/** An interface that defines the inputs of the activity. */
+export interface DeleteMaximoResourceInputs {
+    /**
+     * @description The Maximo API Service.
+     * @required
+     */
+    service: MaximoService;
+
+    /**
+     * @description The resource to delete.
+     * @required
+     */
+    resource:
+        | "mxaction"
+        | "mxamcrew"
+        | "mxbimassetwo"
+        | "mxperson"
+        | "mxperuser"
+        | "mxpo"
+        | "mxpr"
+        | "mxproblem"
+        | "mxreceipt"
+        | "mxsrvad"
+        | string;
+
+    /**
+     * @displayName ID
+     * @description The ID of the resource to delete.
+     */
+    id: string;
+}
+
+/** An interface that defines the outputs of the activity. */
+export interface DeleteMaximoResourceOutputs {
+    /**
+     * @description The result of the activity.
+     */
+    result: {};
+}
+
+/**
+ * @category Maximo
+ * @description Deletes a Maximo resource.
+ * @clientOnly
+ * @unsupportedApps GMV
+ */
+export class DeleteMaximoResource implements IActivityHandler {
+    async execute(
+        inputs: DeleteMaximoResourceInputs
+    ): Promise<DeleteMaximoResourceOutputs> {
+        const { id, resource, service } = inputs;
+        if (!service) {
+            throw new Error("service is required");
+        }
+        if (!resource) {
+            throw new Error("resource is required");
+        }
+
+        const url = `oslc/os/${resource}/${getIdFromIdOrUrl(id)}`;
+        const response = await httpDelete(service, url);
+
+        return {
+            result: response,
+        };
+    }
+}
