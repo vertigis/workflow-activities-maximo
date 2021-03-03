@@ -22,14 +22,24 @@ export interface SendMaximoRequestInputs {
      */
     path:
         | "os/mxaction"
+        | "os/mxamcrew"
         | "os/mxasset"
+        | "os/mxbimassetwo"
+        | "os/mxfeature"
+        | "os/mxinventory"
+        | "os/mxinvoice"
+        | "os/mxitem"
+        | "os/mxlabor"
         | "os/mxperson"
         | "os/mxperuser"
         | "os/mxpo"
         | "os/mxpr"
         | "os/mxproblem"
         | "os/mxreceipt"
+        | "os/mxsr"
         | "os/mxsrvad"
+        | "os/mxvendor"
+        | "os/mxwo"
         | string;
 
     /**

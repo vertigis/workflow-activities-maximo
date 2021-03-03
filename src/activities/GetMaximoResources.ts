@@ -17,14 +17,23 @@ export interface GetMaximoResourcesInputs {
     resource:
         | "mxaction"
         | "mxamcrew"
+        | "mxasset"
         | "mxbimassetwo"
+        | "mxfeature"
+        | "mxinventory"
+        | "mxinvoice"
+        | "mxitem"
+        | "mxlabor"
         | "mxperson"
         | "mxperuser"
         | "mxpo"
         | "mxpr"
         | "mxproblem"
         | "mxreceipt"
+        | "mxsr"
         | "mxsrvad"
+        | "mxvendor"
+        | "mxwo"
         | string;
 
     /**
