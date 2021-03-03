@@ -1,6 +1,7 @@
 import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
 import { MaximoService } from "../MaximoService";
 import { get } from "../request";
+import { getIdFromIdOrUrl } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface GetMaximoAssetInputs {
@@ -109,8 +110,7 @@ export class GetMaximoAsset implements IActivityHandler {
             throw new Error("assetId is required");
         }
 
-        // Get the ID from URLs
-        const id = assetId.substring(assetId.lastIndexOf("/") + 1);
+        const id = getIdFromIdOrUrl(assetId);
 
         const response = await get(service, `oslc/os/mxasset/${id}`, {
             ...(select ? { "oslc.select": select } : undefined),

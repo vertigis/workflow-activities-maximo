@@ -1,6 +1,7 @@
 import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
 import { MaximoService } from "../MaximoService";
 import { post } from "../request";
+import { getIdFromIdOrUrl } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface UpdateMaximoResourceInputs {
@@ -78,10 +79,10 @@ export class UpdateMaximoResource implements IActivityHandler {
             throw new Error("content is required");
         }
 
-        const hasId = !!id;
-        const url = `oslc/os/${resource}${hasId ? "/" + id : ""}`;
+        const idInPath = id ? "/" + getIdFromIdOrUrl(id) : "";
+        const url = `oslc/os/${resource}${idInPath}`;
         const response = await post(service, url, undefined, content, {
-            "x-method-override": hasId ? "PATCH" : "SYNC",
+            "x-method-override": id ? "PATCH" : "SYNC",
             patchtype: "MERGE",
             ...(properties ? { properties: properties } : undefined),
         });
