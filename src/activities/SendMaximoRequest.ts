@@ -64,6 +64,7 @@ export interface SendMaximoRequestOutputs {
 
 /**
  * @category Maximo
+ * @defaultName mxRequest
  * @description Sends a request to the Maximo REST API.
  * @clientOnly
  * @unsupportedApps GMV

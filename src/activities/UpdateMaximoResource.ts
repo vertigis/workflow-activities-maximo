@@ -60,7 +60,7 @@ export interface UpdateMaximoResourceOutputs {
 
 /**
  * @category Maximo
- * @description Updates a Maximo resource.
+ * @description Creates or updates a Maximo resource.
  * @clientOnly
  * @unsupportedApps GMV
  */
