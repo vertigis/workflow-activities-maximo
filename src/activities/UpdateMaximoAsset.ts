@@ -65,9 +65,19 @@ export interface UpdateMaximoAssetInputs {
     };
 
     /**
-     * @description Select clause for selecting a partial view of the member resource.
+     * @description The list of properties of the asset to return in the result. If not specified the result will be empty. For example, assetnum,status.
      */
-    properties?: string;
+    properties?: "*" | string;
+}
+
+/** An interface that defines the outputs of the activity. */
+export interface UpdateMaximoAssetOutputs {
+    /**
+     * @description The result of the activity. This will only have a value if the Properties input is specified.
+     */
+    result?: {
+        href: string;
+    };
 }
 
 /**
@@ -77,7 +87,9 @@ export interface UpdateMaximoAssetInputs {
  * @unsupportedApps GMV
  */
 export class UpdateMaximoAsset implements IActivityHandler {
-    async execute(inputs: UpdateMaximoAssetInputs): Promise<void> {
+    async execute(
+        inputs: UpdateMaximoAssetInputs
+    ): Promise<UpdateMaximoAssetOutputs> {
         const { asset, assetId, properties, service } = inputs;
         if (!service) {
             throw new Error("service is required");
@@ -91,9 +103,19 @@ export class UpdateMaximoAsset implements IActivityHandler {
 
         const id = getIdFromIdOrUrl(assetId);
 
-        await patch(service, `oslc/os/mxasset/${id}`, undefined, asset, {
-            patchtype: "MERGE",
-            ...(properties ? { properties: properties } : undefined),
-        });
+        const response = await patch(
+            service,
+            `oslc/os/mxasset/${id}`,
+            undefined,
+            asset,
+            {
+                patchtype: "MERGE",
+                ...(properties ? { properties: properties } : undefined),
+            }
+        );
+
+        return {
+            result: response,
+        };
     }
 }

@@ -37,12 +37,12 @@ export interface GetMaximoResourcesInputs {
         | string;
 
     /**
-     * @description The where clause to filter the set of resources.
+     * @description The where clause to filter the set of resources. For example, status in ["OPERATING","ACTIVE"] and priority=3.
      */
     where: string;
 
     /**
-     * @description The select clause specifying the set of attributes to fetch from the object structures.
+     * @description The select clause specifying the set of attributes to fetch from the object structures. For example, assetnum,status.
      */
     select: string;
 

@@ -52,15 +52,15 @@ export interface UpdateMaximoResourceInputs {
     };
 
     /**
-     * @description Select clause for selecting a partial view of the member resource.
+     * @description The list of properties of the resource to return in the result. If not specified the result will be empty. For example, assetnum,status.
      */
-    properties?: string;
+    properties?: "*" | string;
 }
 
 /** An interface that defines the outputs of the activity. */
 export interface UpdateMaximoResourceOutputs {
     /**
-     * @description The result of the activity.
+     * @description The result of the activity. This will only have a value if the Properties input is specified.
      */
     result: {
         href: string;
