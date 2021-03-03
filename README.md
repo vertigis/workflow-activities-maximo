@@ -15,10 +15,36 @@ The Maximo activities are designed to work with Maximo versions `7.6.0.2` and ab
 
 ### Cross-Origin Resource Sharing (CORS)
 
-In order for the Maximo activities to be able to communicate with the Maximo REST API your Maximo deployment must support [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS). This can be enabled:
+Typically the web application running your workflow will be on a different domain than the Maximo REST API. In order for the Maximo activities to be able to communicate with the Maximo REST API your Maximo deployment must support [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS). There are several ways to enable this:
 
--   By enabling CORS on the Maximo web server.
--   By using a CORS-enabled proxy.
+-   Enable CORS on the Maximo web server.
+-   Use a proxy that enables CORS by adding the necessary CORS headers.
+    -   The following `web.config` provides an example of how to create such a proxy in **IIS** using [Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) and [URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite).
+        -   Note: this sample is intentionally very permissive so that it will work for most deployments. You should follow CORS best practices and restrict the allowed origins and headers to only those required for your deployment.
+
+```xml
+<?xml version="1.0"?>
+<configuration>
+    <system.webServer>
+        <httpProtocol>
+            <customHeaders>
+                <add name="Access-Control-Allow-Origin" value="*" />
+                <add name="Access-Control-Allow-Headers" value="*" />
+                <add name="Access-Control-Allow-Methods" value="GET, HEAD, OPTIONS, POST, PUT, DELETE" />
+            </customHeaders>
+        </httpProtocol>
+        <rewrite>
+            <rules>
+                <remove name="Proxy" />
+                <rule name="Proxy" patternSyntax="Wildcard" stopProcessing="true">
+                    <match url="*" ignoreCase="false" />
+                    <action type="Rewrite" url="https://acme.emaximo.com/maximo/{R:0}" />
+                </rule>
+            </rules>
+        </rewrite>
+    </system.webServer>
+</configuration>
+```
 
 ## Usage
 
