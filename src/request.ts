@@ -1,6 +1,13 @@
 import { MaximoService } from "./MaximoService";
 import { MaximoRequestError } from "./MaximoRequestError";
 
+function getAuthHeaders(service: MaximoService) {
+    return {
+        ...(service.apiKey ? { apikey: service.apiKey } : undefined),
+        ...(service.authToken ? { maxauth: service.authToken } : undefined),
+    };
+}
+
 export async function get<T = any>(
     service: MaximoService,
     path: string,
@@ -16,8 +23,7 @@ export async function get<T = any>(
     const response = await fetch(url, {
         headers: {
             Accept: "application/json",
-            ...(service.apiKey ? { apikey: service.apiKey } : undefined),
-            ...(service.authToken ? { axauth: service.authToken } : undefined),
+            ...getAuthHeaders(service),
             ...headers,
         },
     });
@@ -45,8 +51,7 @@ export async function post<T = any>(
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            ...(service.apiKey ? { apikey: service.apiKey } : undefined),
-            ...(service.authToken ? { axauth: service.authToken } : undefined),
+            ...getAuthHeaders(service),
             ...headers,
         },
         body: JSON.stringify(body),
@@ -71,8 +76,7 @@ export function patch<T = any>(
 ): Promise<T> {
     return post<T>(service, path, query, body, {
         "x-method-override": "PATCH",
-        ...(service.apiKey ? { apikey: service.apiKey } : undefined),
-        ...(service.authToken ? { axauth: service.authToken } : undefined),
+        ...getAuthHeaders(service),
         ...headers,
     });
 }
@@ -95,8 +99,7 @@ export async function httpDelete<T = any>(
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            ...(service.apiKey ? { apikey: service.apiKey } : undefined),
-            ...(service.authToken ? { axauth: service.authToken } : undefined),
+            ...getAuthHeaders(service),
             ...headers,
         },
         body: JSON.stringify(body),
