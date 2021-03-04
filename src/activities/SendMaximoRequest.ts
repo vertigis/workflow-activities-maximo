@@ -22,14 +22,24 @@ export interface SendMaximoRequestInputs {
      */
     path:
         | "os/mxaction"
+        | "os/mxamcrew"
         | "os/mxasset"
+        | "os/mxbimassetwo"
+        | "os/mxfeature"
+        | "os/mxinventory"
+        | "os/mxinvoice"
+        | "os/mxitem"
+        | "os/mxlabor"
         | "os/mxperson"
         | "os/mxperuser"
         | "os/mxpo"
         | "os/mxpr"
         | "os/mxproblem"
         | "os/mxreceipt"
+        | "os/mxsr"
         | "os/mxsrvad"
+        | "os/mxvendor"
+        | "os/mxwo"
         | string;
 
     /**
@@ -45,6 +55,13 @@ export interface SendMaximoRequestInputs {
     body?: {
         [key: string]: any;
     };
+
+    /**
+     * @description The headers to send on the request.
+     */
+    headers?: {
+        [key: string]: any;
+    };
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -57,6 +74,7 @@ export interface SendMaximoRequestOutputs {
 
 /**
  * @category Maximo
+ * @defaultName mxRequest
  * @description Sends a request to the Maximo REST API.
  * @clientOnly
  * @unsupportedApps GMV
@@ -65,7 +83,7 @@ export class SendMaximoRequest implements IActivityHandler {
     async execute(
         inputs: SendMaximoRequestInputs
     ): Promise<SendMaximoRequestOutputs> {
-        const { body, method, path, query, service } = inputs;
+        const { body, headers, method, path, query, service } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
@@ -77,17 +95,29 @@ export class SendMaximoRequest implements IActivityHandler {
         }
 
         if (method == "GET") {
-            const response = await get(service, `oslc/${path}`, query);
+            const response = await get(service, `oslc/${path}`, query, headers);
             return {
                 result: response,
             };
         } else if (method == "POST") {
-            const response = await post(service, `oslc/${path}`, query, body);
+            const response = await post(
+                service,
+                `oslc/${path}`,
+                query,
+                body,
+                headers
+            );
             return {
                 result: response,
             };
         } else if (method == "PATCH") {
-            const response = await patch(service, `oslc/${path}`, query, body);
+            const response = await patch(
+                service,
+                `oslc/${path}`,
+                query,
+                body,
+                headers
+            );
             return {
                 result: response,
             };
@@ -96,7 +126,8 @@ export class SendMaximoRequest implements IActivityHandler {
                 service,
                 `oslc/${path}`,
                 query,
-                body
+                body,
+                headers
             );
             return {
                 result: response,

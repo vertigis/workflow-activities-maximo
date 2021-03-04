@@ -1,10 +1,10 @@
 import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
 import { MaximoService } from "../MaximoService";
-import { get } from "../request";
+import { httpDelete } from "../request";
 import { getIdFromIdOrUrl } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
-export interface GetMaximoResourceInputs {
+export interface DeleteMaximoResourceInputs {
     /**
      * @description The Maximo API Service.
      * @required
@@ -12,7 +12,7 @@ export interface GetMaximoResourceInputs {
     service: MaximoService;
 
     /**
-     * @description The resource to fetch.
+     * @description The resource to delete.
      * @required
      */
     resource:
@@ -39,55 +39,39 @@ export interface GetMaximoResourceInputs {
 
     /**
      * @displayName ID
-     * @description The ID of the resource to fetch.
-     * @required
+     * @description The ID of the resource to delete.
      */
     id: string;
-
-    /**
-     * @description The select clause specifying the set of attributes to fetch from the object structures.
-     */
-    select: string;
 }
 
 /** An interface that defines the outputs of the activity. */
-export interface GetMaximoResourceOutputs {
+export interface DeleteMaximoResourceOutputs {
     /**
      * @description The result of the activity.
      */
-    result: {
-        href: string;
-    };
+    result: any;
 }
 
 /**
  * @category Maximo
- * @description Gets information about a single Maximo resource.
+ * @description Deletes a Maximo resource.
  * @clientOnly
  * @unsupportedApps GMV
  */
-export class GetMaximoResource implements IActivityHandler {
+export class DeleteMaximoResource implements IActivityHandler {
     async execute(
-        inputs: GetMaximoResourceInputs
-    ): Promise<GetMaximoResourceOutputs> {
-        const { id, resource, select, service } = inputs;
+        inputs: DeleteMaximoResourceInputs
+    ): Promise<DeleteMaximoResourceOutputs> {
+        const { id, resource, service } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
         if (!resource) {
             throw new Error("resource is required");
         }
-        if (!id) {
-            throw new Error("id is required");
-        }
 
-        const response = await get(
-            service,
-            `oslc/os/${resource}/${getIdFromIdOrUrl(id)}`,
-            {
-                ...(select ? { "oslc.select": select } : undefined),
-            }
-        );
+        const url = `oslc/os/${resource}/${getIdFromIdOrUrl(id)}`;
+        const response = await httpDelete(service, url);
 
         return {
             result: response,

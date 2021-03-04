@@ -1,6 +1,7 @@
 import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
 import { MaximoService } from "../MaximoService";
 import { patch } from "../request";
+import { getIdFromIdOrUrl } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface UpdateMaximoAssetInputs {
@@ -62,6 +63,21 @@ export interface UpdateMaximoAssetInputs {
         vendor?: string;
         ytdcost?: number;
     };
+
+    /**
+     * @description The list of properties of the asset to return in the result. If not specified the result will be empty. For example, assetnum,status.
+     */
+    properties?: "*" | string;
+}
+
+/** An interface that defines the outputs of the activity. */
+export interface UpdateMaximoAssetOutputs {
+    /**
+     * @description The result of the activity. This will only have a value if the Properties input is specified.
+     */
+    result?: {
+        href: string;
+    };
 }
 
 /**
@@ -71,8 +87,10 @@ export interface UpdateMaximoAssetInputs {
  * @unsupportedApps GMV
  */
 export class UpdateMaximoAsset implements IActivityHandler {
-    async execute(inputs: UpdateMaximoAssetInputs): Promise<void> {
-        const { asset, assetId, service } = inputs;
+    async execute(
+        inputs: UpdateMaximoAssetInputs
+    ): Promise<UpdateMaximoAssetOutputs> {
+        const { asset, assetId, properties, service } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
@@ -83,9 +101,21 @@ export class UpdateMaximoAsset implements IActivityHandler {
             throw new Error("assetId is required");
         }
 
-        // Get the ID from URLs
-        const id = assetId.substring(assetId.lastIndexOf("/") + 1);
+        const id = getIdFromIdOrUrl(assetId);
 
-        await patch(service, `oslc/os/mxasset/${id}`, undefined, asset);
+        const response = await patch(
+            service,
+            `oslc/os/mxasset/${id}`,
+            undefined,
+            asset,
+            {
+                patchtype: "MERGE",
+                ...(properties ? { properties: properties } : undefined),
+            }
+        );
+
+        return {
+            result: response,
+        };
     }
 }

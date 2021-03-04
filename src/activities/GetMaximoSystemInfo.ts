@@ -40,7 +40,7 @@ export interface GetMaximoSystemInfoOutputs {
 
 /**
  * @category Maximo
- * @description Gets information about the Maximo service.
+ * @description Gets system information about the Maximo service.
  * @clientOnly
  * @unsupportedApps GMV
  */

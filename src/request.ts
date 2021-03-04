@@ -1,10 +1,18 @@
 import { MaximoService } from "./MaximoService";
 import { MaximoRequestError } from "./MaximoRequestError";
 
+function getAuthHeaders(service: MaximoService) {
+    return {
+        ...(service.apiKey ? { apikey: service.apiKey } : undefined),
+        ...(service.authToken ? { maxauth: service.authToken } : undefined),
+    };
+}
+
 export async function get<T = any>(
     service: MaximoService,
     path: string,
-    query?: Record<string, string | number | boolean | null | undefined>
+    query?: Record<string, string | number | boolean | null | undefined>,
+    headers?: Record<string, any>
 ): Promise<T> {
     if (!service.url) {
         throw new Error("url is required");
@@ -15,7 +23,8 @@ export async function get<T = any>(
     const response = await fetch(url, {
         headers: {
             Accept: "application/json",
-            maxauth: service.authToken,
+            ...getAuthHeaders(service),
+            ...headers,
         },
     });
 
@@ -42,7 +51,7 @@ export async function post<T = any>(
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            maxauth: service.authToken,
+            ...getAuthHeaders(service),
             ...headers,
         },
         body: JSON.stringify(body),
@@ -62,10 +71,13 @@ export function patch<T = any>(
     service: MaximoService,
     path: string,
     query?: Record<string, string | number | boolean | null | undefined>,
-    body?: Record<string, any>
+    body?: Record<string, any>,
+    headers?: Record<string, any>
 ): Promise<T> {
     return post<T>(service, path, query, body, {
         "x-method-override": "PATCH",
+        ...getAuthHeaders(service),
+        ...headers,
     });
 }
 
@@ -73,7 +85,8 @@ export async function httpDelete<T = any>(
     service: MaximoService,
     path: string,
     query?: Record<string, string | number | boolean | null | undefined>,
-    body?: Record<string, any>
+    body?: Record<string, any>,
+    headers?: Record<string, any>
 ): Promise<T> {
     if (!service.url) {
         throw new Error("url is required");
@@ -86,7 +99,8 @@ export async function httpDelete<T = any>(
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            maxauth: service.authToken,
+            ...getAuthHeaders(service),
+            ...headers,
         },
         body: JSON.stringify(body),
     });
