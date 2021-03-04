@@ -26,6 +26,11 @@ export interface GetMaximoAssetsInputs {
     orderBy: string;
 
     /**
+     * @description The number of results to include in the response.
+     */
+    pageSize: number;
+
+    /**
      * @description Whether to return only the total number of results matching the search criteria. The default is false.
      */
     countOnly: boolean;
@@ -55,7 +60,7 @@ export class GetMaximoAssets implements IActivityHandler {
     async execute(
         inputs: GetMaximoAssetsInputs
     ): Promise<GetMaximoAssetsOutputs> {
-        const { countOnly, orderBy, select, service, where } = inputs;
+        const { countOnly, orderBy, pageSize, select, service, where } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
@@ -63,6 +68,7 @@ export class GetMaximoAssets implements IActivityHandler {
         const response = await get(service, `oslc/os/mxasset`, {
             ...(countOnly ? { count: 1 } : undefined),
             ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
+            ...(pageSize ? { "oslc.pageSize": pageSize } : undefined),
             ...(select ? { "oslc.select": select } : undefined),
             ...(where ? { "oslc.where": where } : undefined),
         });

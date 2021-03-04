@@ -52,6 +52,11 @@ export interface GetMaximoResourcesInputs {
     orderBy: string;
 
     /**
+     * @description The number of results to include in the response.
+     */
+    pageSize: number;
+
+    /**
      * @description Whether to return only the total number of results matching the search criteria. The default is false.
      */
     countOnly: boolean;
@@ -81,7 +86,15 @@ export class GetMaximoResources implements IActivityHandler {
     async execute(
         inputs: GetMaximoResourcesInputs
     ): Promise<GetMaximoResourcesOutputs> {
-        const { countOnly, orderBy, resource, select, service, where } = inputs;
+        const {
+            countOnly,
+            orderBy,
+            pageSize,
+            resource,
+            select,
+            service,
+            where,
+        } = inputs;
         if (!service) {
             throw new Error("service is required");
         }
@@ -92,6 +105,7 @@ export class GetMaximoResources implements IActivityHandler {
         const response = await get(service, `oslc/os/${resource}`, {
             ...(countOnly ? { count: 1 } : undefined),
             ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
+            ...(pageSize ? { "oslc.pageSize": pageSize } : undefined),
             ...(select ? { "oslc.select": select } : undefined),
             ...(where ? { "oslc.where": where } : undefined),
         });
