@@ -10,10 +10,12 @@ export interface CreateMaximoServiceInputs {
      * @required
      */
     url: string;
+
     /**
      * @description The username of a Maximo user.
      */
     username: string;
+
     /**
      * @description The password of a Maximo user. Do not hard code passwords into workflows.
      */
@@ -21,7 +23,7 @@ export interface CreateMaximoServiceInputs {
 
     /**
      * @displayName API Key
-     * @description The API key of a Maximo.
+     * @description A Maximo API key.
      */
     apiKey: string;
 }
@@ -58,7 +60,10 @@ export class CreateMaximoService implements IActivityHandler {
 
         const service: MaximoService = {
             url: normalizedUrl,
-            authToken: btoa(`${username}:${password}`),
+            authToken:
+                username && password
+                    ? btoa(`${username}:${password}`)
+                    : undefined,
             apiKey,
         };
 
