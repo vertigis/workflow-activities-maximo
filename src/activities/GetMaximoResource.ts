@@ -62,7 +62,7 @@ export interface GetMaximoResourceOutputs {
 
 /**
  * @category Maximo
- * @description Gets a list of Maximo resources.
+ * @description Gets information about a single Maximo resource.
  * @clientOnly
  * @unsupportedApps GMV
  */

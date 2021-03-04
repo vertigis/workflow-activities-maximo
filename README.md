@@ -60,7 +60,7 @@ To use the Maximo activities in [Geocortex Workflow Designer](https://apps.geoco
     - API: `JavaScript`
     - URL: The URL to this activity pack manifest
         - Use https://unpkg.com/@geocortex/workflow-activities-maximo/activitypack.json for the latest version
-        - Use https://unpkg.com/@geocortex/workflow-activities-maximo@0.1.0/activitypack.json for a specific version
+        - Use https://unpkg.com/@geocortex/workflow-activities-maximo@0.1.4/activitypack.json for a specific version
     - Title: Your desired title
     - Tags: Must include `geocortex-workflow-activity-pack`
 1. Reload [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/)
@@ -72,7 +72,7 @@ To use the Maximo activities in [Geocortex Workflow Designer](https://apps.geoco
     1. To connect to the Maximo service as a user:
         1. Add the `Create Maximo Service` activity to a workflow
         1. Set the `URL` input to the root URL of your Maximo server. For example, `https://acme.emaximo.com/maximo`.
-        1. Set the `Username` and `Password` inputs
+        1. Set the `Username` and `Password` inputs or the `API Key` input
     - **IMPORTANT:** secrets and passwords are credentials that should not be hard coded into workflows. These values should be acquired by the workflow at runtime from the end user or from another secure system.
 1. Use the Maximo service
     1. Add one of the other Maximo activities to the workflow. For example, `Get Maximo Assets`.
