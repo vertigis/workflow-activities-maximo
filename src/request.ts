@@ -59,7 +59,10 @@ export async function post<T = any>(
 
     checkResponse(response);
 
-    if (response.status === 204) {
+    if (
+        response.status === 204 ||
+        response.headers.get("content-length") === "0"
+    ) {
         // No content
         return {} as T;
     }

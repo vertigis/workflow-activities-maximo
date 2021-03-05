@@ -1,4 +1,5 @@
 // Activities will be re-exported from this file.
+export * from "./activities/CreateMaximoResource";
 export * from "./activities/CreateMaximoService";
 export * from "./activities/DeleteMaximoResource";
 export * from "./activities/GetMaximoAsset";
