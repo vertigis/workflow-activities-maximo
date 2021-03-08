@@ -1,8 +1,14 @@
 export class MaximoRequestError extends Error {
-    readonly response: Response;
+    readonly error?: Record<string, any>;
+    readonly statusCode: number;
 
-    constructor(response: Response, message?: string) {
+    constructor(
+        statusCode: number,
+        error?: Record<string, any>,
+        message?: string
+    ) {
         super(message || "Maximo request failed.");
-        this.response = response;
+        this.error = error;
+        this.statusCode = statusCode;
     }
 }
