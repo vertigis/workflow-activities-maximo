@@ -28,7 +28,7 @@ export async function get<T = any>(
         },
     });
 
-    checkResponse(response);
+    await checkResponse(response);
 
     return await response.json();
 }
@@ -57,7 +57,7 @@ export async function post<T = any>(
         body: JSON.stringify(body),
     });
 
-    checkResponse(response);
+    await checkResponse(response);
 
     if (
         response.status === 204 ||
@@ -108,7 +108,7 @@ export async function httpDelete<T = any>(
         body: JSON.stringify(body),
     });
 
-    checkResponse(response);
+    await checkResponse(response);
 
     if (response.status === 204) {
         // No content
@@ -118,9 +118,23 @@ export async function httpDelete<T = any>(
     return await response.json();
 }
 
-export function checkResponse(response: Response, message?: string): void {
+export async function checkResponse(
+    response: Response,
+    message?: string
+): Promise<void> {
     if (!response.ok) {
-        throw new MaximoRequestError(response, message);
+        // Try to read the error body of the response
+        let error: Record<string, any> | undefined;
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            try {
+                const responseJson = await response.json();
+                error = responseJson?.Error || responseJson;
+            } catch {
+                // Swallow errors reading the response so that we don't mask the original failure
+            }
+        }
+        throw new MaximoRequestError(response.status, error, message);
     }
 }
 
