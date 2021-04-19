@@ -31,7 +31,7 @@ export interface CreateMaximoServiceInputs {
 /** An interface that defines the outputs of the activity. */
 export interface CreateMaximoServiceOutputs {
     /**
-     * @description The Maximo service that can be supplied to other FME activities.
+     * @description The Maximo service that can be supplied to other Maximo activities.
      */
     service: MaximoService;
 }
