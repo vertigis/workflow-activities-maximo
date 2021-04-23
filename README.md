@@ -17,17 +17,17 @@ The Maximo activities are designed to work with Maximo versions `7.6.0.2` and ab
 
 Typically the web application running your workflow will be on a different domain than the Maximo REST API. In order for the Maximo activities to be able to communicate with the Maximo REST API your Maximo deployment must support [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS). There are multiple ways to enable this:
 
--   Enable CORS on the Maximo web server.
+-   **Option 1:** Enable CORS on the Maximo web server.
     1. Log in to Maximo as an administrator
-    1. Open the **System Properties**
-    1. Filter the **Global Properties** to those starting with `mxe.oslc.aclallow`
+    1. Open the **System Properties** via the **System Configuration** > **Platform Configuration** > **System Properties** menu
+    1. Optionally filter the properties to show only those starting with `mxe.oslc.aclallow`
     1. Set the `mxe.oslc.aclalloworigin` property to match the base URL of the web application that will use the Maximo activities. For example, one of:
         - `https://apps.geocortex.com`
         - `https://acme.apps.geocortex.com`
         - `https://www.my-server.com`
-    1. Set the `mxe.oslc.aclallowheaders` property to `maxauth,x-method-override,patchtype,content-type,accept,x-public-uri,properties`
-    1. Set the `mxe.oslc.aclallowmethods` property to `POST,GET,DELETE,OPTIONS`
--   Use a proxy that enables CORS by adding the necessary CORS headers.
+    1. Set the `mxe.oslc.aclallowheaders` property to `accept,content-type,maxauth,patchtype,properties,x-method-override,x-public-uri`
+    1. Set the `mxe.oslc.aclallowmethods` property to `GET,POST,PUT,DELETE,OPTIONS`
+-   **Option 2:** Use a proxy that enables CORS by adding the necessary CORS headers.
     -   The following `web.config` provides an example of how to create such a proxy in **IIS** using [Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) and [URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite).
         -   Note: this sample is intentionally very permissive so that it will work for most deployments. You should follow CORS best practices and restrict the allowed origins and headers to only those required for your deployment.
 
