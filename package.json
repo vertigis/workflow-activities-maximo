@@ -1,7 +1,7 @@
 {
     "name": "@geocortex/workflow-activities-maximo",
     "version": "0.0.0-semantically-released",
-    "description": "Maximo activities for Geocortex Workflow",
+    "description": "Maximo activities for VertiGIS Studio Workflow",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/geocortex/workflow-activities-maximo.git"
@@ -16,7 +16,7 @@
         "Maximo",
         "IBM",
         "ArcGIS",
-        "GIS"
+        "GIS"        
     ],
     "scripts": {
         "build": "vertigis-workflow-sdk build",
