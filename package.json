@@ -11,12 +11,12 @@
     "homepage": "https://github.com/geocortex/workflow-activities-maximo#readme",
     "keywords": [
         "VertiGIS",
-        "Geocortex",
+        "VertiGIS Studio",
         "Workflow",
         "Maximo",
         "IBM",
         "ArcGIS",
-        "GIS"        
+        "GIS"
     ],
     "scripts": {
         "build": "vertigis-workflow-sdk build",
