@@ -7,3 +7,5 @@ Once you're happy with your changes and have committed them to a branch, you can
 ## Pull request guidelines
 
 This project uses [semantic-release](https://github.com/semantic-release/semantic-release) to automate the versioning and deployment of this repository. **The version used during release is determined based on the title of the merged pull request. The title must follow the [Conventional Commits standard](https://www.conventionalcommits.org/).**
+
+### To be removed
