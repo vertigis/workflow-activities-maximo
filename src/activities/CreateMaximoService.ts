@@ -26,6 +26,11 @@ export interface CreateMaximoServiceInputs {
      * @description A Maximo API key.
      */
     apiKey: string;
+
+    /**
+     * @description The application context. The default is "oslc".
+     */
+    context: "oslc" | "api" | string;
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -47,7 +52,7 @@ export class CreateMaximoService implements IActivityHandler {
     async execute(
         inputs: CreateMaximoServiceInputs
     ): Promise<CreateMaximoServiceOutputs> {
-        const { apiKey, password, url, username } = inputs;
+        const { apiKey, password, context = "oslc", url, username } = inputs;
         if (!url) {
             throw new Error("url is required");
         }
@@ -57,17 +62,19 @@ export class CreateMaximoService implements IActivityHandler {
 
         // Remove trailing slashes
         const normalizedUrl = url.replace(/\/*$/, "");
+        const normalizedContext = context.replace(/\/*$/, "");
 
         const service: MaximoService = {
-            url: normalizedUrl,
+            apiKey,
             authToken:
                 username && password
                     ? btoa(`${username}:${password}`)
                     : undefined,
-            apiKey,
+            context: normalizedContext,
+            url: normalizedUrl,
         };
 
-        await post(service, "oslc/login");
+        await post(service, "login");
 
         return {
             service,

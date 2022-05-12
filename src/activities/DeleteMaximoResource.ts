@@ -70,7 +70,7 @@ export class DeleteMaximoResource implements IActivityHandler {
             throw new Error("resource is required");
         }
 
-        const url = `oslc/os/${resource}/${getIdFromIdOrUrl(id)}`;
+        const url = `os/${resource}/${getIdFromIdOrUrl(id)}`;
         const response = await httpDelete(service, url);
 
         return {

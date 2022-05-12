@@ -1,5 +1,6 @@
 export interface MaximoService {
-    url: string;
-    authToken?: string;
     apiKey?: string;
+    authToken?: string;
+    context: string;
+    url: string;
 }

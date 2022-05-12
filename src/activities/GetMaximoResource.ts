@@ -83,7 +83,7 @@ export class GetMaximoResource implements IActivityHandler {
 
         const response = await get(
             service,
-            `oslc/os/${resource}/${getIdFromIdOrUrl(id)}`,
+            `os/${resource}/${getIdFromIdOrUrl(id)}`,
             {
                 ...(select ? { "oslc.select": select } : undefined),
             }

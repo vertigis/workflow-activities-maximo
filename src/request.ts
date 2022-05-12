@@ -45,7 +45,9 @@ export async function post<T = any>(
     }
 
     const qs = objectToQueryString({ lean: 1, ...query });
-    const url = `${service.url}/${path}${qs ? "?" + qs : ""}`;
+    const url = `${service.url}/${service.context}/${path}${
+        qs ? "?" + qs : ""
+    }`;
     const response = await fetch(url, {
         method: "POST",
         headers: {

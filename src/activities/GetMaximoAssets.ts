@@ -65,7 +65,7 @@ export class GetMaximoAssets implements IActivityHandler {
             throw new Error("service is required");
         }
 
-        const response = await get(service, `oslc/os/mxasset`, {
+        const response = await get(service, `os/mxasset`, {
             ...(countOnly ? { count: 1 } : undefined),
             ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
             ...(pageSize ? { "oslc.pageSize": pageSize } : undefined),

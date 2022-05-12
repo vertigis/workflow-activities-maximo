@@ -105,7 +105,7 @@ export class UpdateMaximoAsset implements IActivityHandler {
 
         const response = await patch(
             service,
-            `oslc/os/mxasset/${id}`,
+            `os/mxasset/${id}`,
             undefined,
             asset,
             {

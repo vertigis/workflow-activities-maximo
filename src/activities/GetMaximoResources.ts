@@ -102,7 +102,7 @@ export class GetMaximoResources implements IActivityHandler {
             throw new Error("resource is required");
         }
 
-        const response = await get(service, `oslc/os/${resource}`, {
+        const response = await get(service, `os/${resource}`, {
             ...(countOnly ? { count: 1 } : undefined),
             ...(orderBy ? { "oslc.orderBy": orderBy } : undefined),
             ...(pageSize ? { "oslc.pageSize": pageSize } : undefined),

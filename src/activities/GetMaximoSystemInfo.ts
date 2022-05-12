@@ -53,7 +53,7 @@ export class GetMaximoSystemInfo implements IActivityHandler {
             throw new Error("service is required");
         }
 
-        const response = await get(service, `oslc/systeminfo`);
+        const response = await get(service, `systeminfo`);
 
         return {
             result: response,

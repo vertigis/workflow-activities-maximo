@@ -112,7 +112,7 @@ export class GetMaximoAsset implements IActivityHandler {
 
         const id = getIdFromIdOrUrl(assetId);
 
-        const response = await get(service, `oslc/os/mxasset/${id}`, {
+        const response = await get(service, `os/mxasset/${id}`, {
             ...(select ? { "oslc.select": select } : undefined),
         });
 
