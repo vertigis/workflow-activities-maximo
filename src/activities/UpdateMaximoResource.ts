@@ -89,7 +89,7 @@ export class UpdateMaximoResource implements IActivityHandler {
         }
 
         const idInPath = id ? "/" + getIdFromIdOrUrl(id) : "";
-        const url = `oslc/os/${resource}${idInPath}`;
+        const url = `os/${resource}${idInPath}`;
         const response = await post(service, url, undefined, content, {
             "x-method-override": id ? "PATCH" : "SYNC",
             patchtype: "MERGE",

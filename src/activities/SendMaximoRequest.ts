@@ -95,36 +95,24 @@ export class SendMaximoRequest implements IActivityHandler {
         }
 
         if (method == "GET") {
-            const response = await get(service, `oslc/${path}`, query, headers);
+            const response = await get(service, path, query, headers);
             return {
                 result: response,
             };
         } else if (method == "POST") {
-            const response = await post(
-                service,
-                `oslc/${path}`,
-                query,
-                body,
-                headers
-            );
+            const response = await post(service, path, query, body, headers);
             return {
                 result: response,
             };
         } else if (method == "PATCH") {
-            const response = await patch(
-                service,
-                `oslc/${path}`,
-                query,
-                body,
-                headers
-            );
+            const response = await patch(service, path, query, body, headers);
             return {
                 result: response,
             };
         } else if (method == "DELETE") {
             const response = await httpDelete(
                 service,
-                `oslc/${path}`,
+                path,
                 query,
                 body,
                 headers

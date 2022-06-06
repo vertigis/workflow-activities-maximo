@@ -103,7 +103,7 @@ export class GetMaximoCurrentUser implements IActivityHandler {
             throw new Error("service is required");
         }
 
-        const response = await get(service, `oslc/whoami`);
+        const response = await get(service, `whoami`);
 
         return {
             result: response,

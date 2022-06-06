@@ -81,7 +81,7 @@ export class CreateMaximoResource implements IActivityHandler {
             throw new Error("content is required");
         }
 
-        const url = `oslc/os/${resource}`;
+        const url = `os/${resource}`;
         const response = await post(service, url, undefined, content, {
             ...(properties ? { properties: properties } : undefined),
         });
