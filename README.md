@@ -73,7 +73,7 @@ To use the Maximo activities in [VertiGIS Studio Workflow Designer](https://apps
     - Title: Your desired title
     - Tags: Must include `geocortex-workflow-activity-pack`
 1. Reload [VertiGIS Studio Workflow Designer](https://apps.vertigisstudio.com/workflow/designer/)
-1. The Maximo activities will now appear in the activity toolbox in an `Maximo` category
+1. The Maximo activities will now appear in the activity toolbox in a `Maximo` category
 
 ### Use the Maximo activities in a workflow
 
