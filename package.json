@@ -1,14 +1,14 @@
 {
-    "name": "@geocortex/workflow-activities-maximo",
+    "name": "@vertigis/workflow-activities-maximo",
     "version": "0.0.0-semantically-released",
     "description": "Maximo activities for VertiGIS Studio Workflow",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/geocortex/workflow-activities-maximo.git"
+        "url": "git+https://github.com/vertigis/workflow-activities-maximo.git"
     },
     "license": "MIT",
     "author": "VertiGIS",
-    "homepage": "https://github.com/geocortex/workflow-activities-maximo#readme",
+    "homepage": "https://github.com/vertigis/workflow-activities-maximo#readme",
     "keywords": [
         "VertiGIS",
         "VertiGIS Studio",
