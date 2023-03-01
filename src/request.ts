@@ -19,7 +19,9 @@ export async function get<T = any>(
     }
 
     const qs = objectToQueryString({ lean: 1, ...query });
-    const url = `${service.url}/${path}${qs ? "?" + qs : ""}`;
+    const url = `${service.url}/${service.context}/${path}${
+        qs ? "?" + qs : ""
+    }`;
     const response = await fetch(url, {
         headers: {
             Accept: "application/json",
@@ -98,7 +100,9 @@ export async function httpDelete<T = any>(
     }
 
     const qs = objectToQueryString({ lean: 1, ...query });
-    const url = `${service.url}/${path}${qs ? "?" + qs : ""}`;
+    const url = `${service.url}/${service.context}/${path}${
+        qs ? "?" + qs : ""
+    }`;
     const response = await fetch(url, {
         method: "DELETE",
         headers: {
