@@ -64,7 +64,7 @@ export interface CreateMaximoResourceOutputs {
  * @category Maximo
  * @description Creates a Maximo resource.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class CreateMaximoResource implements IActivityHandler {
     async execute(

@@ -77,7 +77,7 @@ export interface SendMaximoRequestOutputs {
  * @defaultName mxRequest
  * @description Sends a request to the Maximo REST API.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class SendMaximoRequest implements IActivityHandler {
     async execute(

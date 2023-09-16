@@ -64,7 +64,7 @@ export interface GetMaximoResourceOutputs {
  * @category Maximo
  * @description Gets information about a single Maximo resource.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class GetMaximoResource implements IActivityHandler {
     async execute(

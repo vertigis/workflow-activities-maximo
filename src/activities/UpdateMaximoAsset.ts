@@ -84,7 +84,7 @@ export interface UpdateMaximoAssetOutputs {
  * @category Maximo
  * @description Updates information about a single Maximo asset.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class UpdateMaximoAsset implements IActivityHandler {
     async execute(

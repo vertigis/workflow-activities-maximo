@@ -56,7 +56,7 @@ export interface DeleteMaximoResourceOutputs {
  * @category Maximo
  * @description Deletes a Maximo resource.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class DeleteMaximoResource implements IActivityHandler {
     async execute(
