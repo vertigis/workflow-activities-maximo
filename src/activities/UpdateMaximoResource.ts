@@ -71,7 +71,7 @@ export interface UpdateMaximoResourceOutputs {
  * @category Maximo
  * @description Creates or updates a Maximo resource.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class UpdateMaximoResource implements IActivityHandler {
     async execute(

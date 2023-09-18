@@ -42,7 +42,7 @@ export interface GetMaximoSystemInfoOutputs {
  * @category Maximo
  * @description Gets system information about the Maximo service.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class GetMaximoSystemInfo implements IActivityHandler {
     async execute(

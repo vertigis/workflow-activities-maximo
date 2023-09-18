@@ -96,7 +96,7 @@ export interface GetMaximoAssetOutputs {
  * @category Maximo
  * @description Gets information about a single Maximo asset.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class GetMaximoAsset implements IActivityHandler {
     async execute(
