@@ -1,4 +1,4 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 import { MaximoService } from "../MaximoService";
 import { get } from "../request";
 

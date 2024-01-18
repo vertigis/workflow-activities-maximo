@@ -1,9 +1,11 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 import { MaximoService } from "../MaximoService";
 import { get, httpDelete, patch, post } from "../request";
 
 /** An interface that defines the inputs of the activity. */
 export interface SendMaximoRequestInputs {
+    /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+
     /**
      * @description The Maximo API Service.
      * @required
@@ -62,6 +64,8 @@ export interface SendMaximoRequestInputs {
     headers?: {
         [key: string]: any;
     };
+
+    /* eslint-enable @typescript-eslint/no-redundant-type-constituents */
 }
 
 /** An interface that defines the outputs of the activity. */
