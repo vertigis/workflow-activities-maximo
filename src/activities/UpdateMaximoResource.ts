@@ -1,10 +1,12 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 import { MaximoService } from "../MaximoService";
 import { post } from "../request";
 import { getIdFromIdOrUrl } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface UpdateMaximoResourceInputs {
+    /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+
     /**
      * @description The Maximo API Service.
      * @required
@@ -55,6 +57,8 @@ export interface UpdateMaximoResourceInputs {
      * @description The list of properties of the resource to return in the result. If not specified the result will be empty. For example, assetnum,status.
      */
     properties?: "*" | string;
+
+    /* eslint-enable @typescript-eslint/no-redundant-type-constituents */
 }
 
 /** An interface that defines the outputs of the activity. */

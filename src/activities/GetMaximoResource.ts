@@ -1,10 +1,12 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 import { MaximoService } from "../MaximoService";
 import { get } from "../request";
 import { getIdFromIdOrUrl } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface GetMaximoResourceInputs {
+    /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+
     /**
      * @description The Maximo API Service.
      * @required
@@ -48,6 +50,8 @@ export interface GetMaximoResourceInputs {
      * @description The select clause specifying the set of attributes to fetch from the object structures.
      */
     select: string;
+
+    /* eslint-enable @typescript-eslint/no-redundant-type-constituents */
 }
 
 /** An interface that defines the outputs of the activity. */
